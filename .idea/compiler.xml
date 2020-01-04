@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="services" />
         <module name="models" />
-        <module name="image-catalog-lib" />
         <module name="image-catalog-api" />
       </profile>
     </annotationProcessing>

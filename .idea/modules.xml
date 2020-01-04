@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/image-catalog.iml" filepath="$PROJECT_DIR$/image-catalog.iml" />
       <module fileurl="file://$PROJECT_DIR$/api/image-catalog-api.iml" filepath="$PROJECT_DIR$/api/image-catalog-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib/image-catalog-lib.iml" filepath="$PROJECT_DIR$/lib/image-catalog-lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/models/models.iml" filepath="$PROJECT_DIR$/models/models.iml" />
       <module fileurl="file://$PROJECT_DIR$/services/services.iml" filepath="$PROJECT_DIR$/services/services.iml" />
     </modules>

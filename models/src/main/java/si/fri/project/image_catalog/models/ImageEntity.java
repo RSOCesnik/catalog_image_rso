@@ -6,7 +6,7 @@ import java.util.List;
 @Entity(name = "image_data")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "Photo.getAll", query = "SELECT p FROM image_data p")
+                @NamedQuery(name = "ImageEntity.getAll", query = "SELECT p FROM image_data p")
         }
 )
 public class ImageEntity {

@@ -38,6 +38,5 @@
     <orderEntry type="library" name="Maven: org.eclipse.persistence:org.eclipse.persistence.jpa.jpql:2.7.4" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:org.eclipse.persistence.core:2.7.4" level="project" />
     <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.2.5" level="project" />
-    <orderEntry type="module" module-name="image-catalog-lib" />
   </component>
 </module>

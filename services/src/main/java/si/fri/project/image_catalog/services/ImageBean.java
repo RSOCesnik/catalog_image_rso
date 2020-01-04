@@ -22,13 +22,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
-
+import si.fri.project.image_catalog.services.AppProperties;
 @ApplicationScoped
 public class ImageBean {
 //    private Logger log = Logger.getLogger(PhotoBean.class.getName());
 
     @Inject
     private EntityManager em;
+
+    @Inject
+    private AppProperties appProperties;
 
     private Client httpClient;
 
@@ -42,8 +45,15 @@ public class ImageBean {
         QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery())
                 .defaultOffset(0)
                 .build();
+        if(appProperties.isExternalServicesEnabled()) {
+            try {
+                return JPAUtils.queryEntities(em, ImageEntity.class, queryParameters);
 
-        return JPAUtils.queryEntities(em, ImageEntity.class, queryParameters);
+            } catch (WebApplicationException | ProcessingException e) {
+                throw new InternalServerErrorException(e);
+            }
+        }
+        return null;
 
     }
 

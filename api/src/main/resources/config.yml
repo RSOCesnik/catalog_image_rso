@@ -14,3 +14,9 @@ kumuluzee:
       password: adminadmin
       pool:
         max-size: 20
+  config:
+    etcd:
+      hosts: http://localhost:2379
+    discovery:
+      etcd:
+        hosts: http://localhost:2379
