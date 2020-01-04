@@ -17,6 +17,29 @@ kumuluzee:
   config:
     etcd:
       hosts: http://localhost:2379
-    discovery:
-      etcd:
-        hosts: http://localhost:2379
+  discovery:
+    etcd:
+      hosts: http://localhost:2379
+  logs:
+    config-file:
+      '<?xml version="1.0" encoding="UTF-8"?>
+           <Configuration name="tutorial-logging">
+               <Appenders>
+                   <Console name="console" target="SYSTEM_OUT">
+                       <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
+                   </Console>
+
+                   <!-- A socket definition for sending logs into Logstash using TCP and JSON format.-->
+                   <!--<Socket name="logstash" host="192.168.99.100" port="5043" protocol="tcp">
+                      <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
+                   </Socket>-->
+
+               </Appenders>
+               <Loggers>
+                   <!-- Default logger -->
+                   <Root level="trace">
+                       <AppenderRef ref="console"/>
+                       <AppenderRef ref="logstash"/>
+                   </Root>
+               </Loggers>
+           </Configuration>'

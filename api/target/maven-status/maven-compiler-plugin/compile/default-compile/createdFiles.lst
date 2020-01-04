@@ -1,2 +1,3 @@
+META-INF/services/javax.ws.rs.core.Application
 si/fri/project/image_catalog/api/v1/resource/ImageCatalogResource.class
 si/fri/project/image_catalog/api/v1/ImageCatalogApplication.class

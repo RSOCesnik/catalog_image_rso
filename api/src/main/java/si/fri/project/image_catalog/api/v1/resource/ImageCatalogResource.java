@@ -15,8 +15,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.kumuluz.ee.logs.cdi.Log;
 import si.fri.project.image_catalog.models.ImageEntity;
 import si.fri.project.image_catalog.services.ImageBean;
+@Log
 @ApplicationScoped
 @Path("/catalog")
 public class ImageCatalogResource {

@@ -19,7 +19,7 @@ public class ImageEntity {
     private String title;
 
     @Column(name = "description")
-    private Integer description;
+    private String description;
 
     @Column(name = "created")
     private String created;
@@ -43,11 +43,11 @@ public class ImageEntity {
         this.title = title;
     }
 
-    public Integer getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Integer description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
