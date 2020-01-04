@@ -43,3 +43,17 @@ kumuluzee:
                    </Root>
                </Loggers>
            </Configuration>'
+  health:
+    servlet:
+      mapping: /health
+      enabled: true
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/ImageDS
+      etcd-health-check:
+        connection-url: http://localhost:2379/health
+      http-health-check:
+        - connection-url: http://localhost:8081/v1/uploads
+  app-properties:
+    service:
+      healthy: true

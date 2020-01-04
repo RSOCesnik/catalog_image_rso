@@ -1,7 +1,6 @@
 package si.fri.project.image_catalog.models;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity(name = "image_data")
 @NamedQueries(value =

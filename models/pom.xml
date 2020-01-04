@@ -20,16 +20,10 @@
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-jpa-eclipselink</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>si.fri.project</groupId>
-            <artifactId>image-catalog-lib</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
