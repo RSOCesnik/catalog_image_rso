@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="services" />
         <module name="models" />
         <module name="image-catalog-lib" />
         <module name="image-catalog-api" />
@@ -16,6 +17,7 @@
       <module name="image-catalog-api" target="1.8" />
       <module name="image-catalog-lib" target="1.8" />
       <module name="models" target="1.8" />
+      <module name="services" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
