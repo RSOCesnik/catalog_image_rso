@@ -29,17 +29,16 @@ kumuluzee:
                        <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
                    </Console>
 
-                   <!-- A socket definition for sending logs into Logstash using TCP and JSON format.-->
-                   <!--<Socket name="logstash" host="192.168.99.100" port="5043" protocol="tcp">
+                   <Socket name="logstash" host="dcbcb4f6-088e-4793-9456-47eced0cec3b-ls.logit.io" port="11639" protocol="tcp">
                       <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
-                   </Socket>-->
+                   </Socket>
 
                </Appenders>
                <Loggers>
                    <!-- Default logger -->
-                   <Root level="trace">
-                       <AppenderRef ref="console"/>
-                       <AppenderRef ref="logstash"/>
+                   <Root level="all">
+                       <AppenderRef ref="console" level="info"/>
+                       <AppenderRef ref="logstash" level="trace"/>
                    </Root>
                </Loggers>
            </Configuration>'
@@ -54,6 +53,18 @@ kumuluzee:
         connection-url: http://localhost:2379/health
       http-health-check:
         - connection-url: http://localhost:8081/v1/uploads
+  metrics:
+    servlet:
+      enabled: true
+      mapping: /metrics
+    web-instrumentation:
+      - name: catalog-endpoint
+        url-pattern: /v1/catlog/*
+        status-codes: "200, 404, 500"
+      - name: info-endpoint
+        url-pattern: /v1/catalog/info/*
+        status-codes: "200"
+
   app-properties:
     service:
       healthy: true

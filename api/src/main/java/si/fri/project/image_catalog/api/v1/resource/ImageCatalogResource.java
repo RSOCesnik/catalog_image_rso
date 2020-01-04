@@ -9,10 +9,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
-
 import com.kumuluz.ee.logs.cdi.Log;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Metered;
 import si.fri.project.image_catalog.models.ImageEntity;
 import si.fri.project.image_catalog.services.ImageBean;
+
 @Log
 @ApplicationScoped
 @Path("/catalog")
@@ -23,11 +25,20 @@ public class ImageCatalogResource {
     @Inject
     private ImageBean imageBean;
 
+    @Metered
     @GET
     public Response getPhotos() {
         List<ImageEntity> photos = imageBean.getPhotos(uriInfo);
 
         return Response.ok(photos).build();
     }
+    @GET
+    @Path("/info")
+    @Counted(name = "demo_counter", monotonic = true)
+    public Response getInfo() {
+
+        return Response.ok("INFO").build();
+    }
+
 
 }
