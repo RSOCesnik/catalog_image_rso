@@ -52,7 +52,7 @@ kumuluzee:
       etcd-health-check:
         connection-url: http://localhost:2379/health
       http-health-check:
-        - connection-url: http://localhost:8081/v1/uploads
+        - connection-url: http://localhost:8083/v1/catalog
   metrics:
     servlet:
       enabled: true
@@ -66,5 +66,6 @@ kumuluzee:
         status-codes: "200"
 
   app-properties:
+    config-services-enabled: true
     service:
       healthy: true

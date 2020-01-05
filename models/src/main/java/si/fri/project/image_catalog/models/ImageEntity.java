@@ -20,9 +20,6 @@ public class ImageEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created")
-    private String created;
-
     @Column(name = "data")
     private String data;
 
