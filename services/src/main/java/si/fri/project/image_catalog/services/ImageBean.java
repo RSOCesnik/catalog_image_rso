@@ -121,14 +121,12 @@ public class ImageBean {
                     .body("q="+ URLEncoder.encode(description, "UTF-8"))
                     .asString();
 
-            JSONObject myObject = new JSONObject(response.getBody());
-//            Response response = client.newCall(request).execute();
-            log.severe(response.getBody().toString());
+            log.severe(response.getBody());
+            return response.getBody();
         } catch (WebApplicationException | ProcessingException | UnirestException | UnsupportedEncodingException e) {
             log.severe(e.getMessage());
             throw new InternalServerErrorException(e);
         }
-        return "";
     }
 
 

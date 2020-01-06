@@ -39,6 +39,7 @@ public class ImageCatalogResource {
 
     @GET
     @Path("/{photoId}")
+    @Counted(name = "demo_counter", monotonic = true)
     public Response getPhoto(@PathParam("photoId")Integer photoId) {
         ImageEntity photoandcomments = imageBean.getPhoto(photoId);
         if(photoandcomments == null) {
@@ -62,7 +63,7 @@ public class ImageCatalogResource {
 
     @GET
     @Path("/external/{text}")
-    public Response getPhoto(@PathParam("text")String description) {
+    public Response getExternalData(@PathParam("text")String description) {
         String descriptionData = imageBean.getDescriptionLang(description);
         if(descriptionData == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -73,7 +74,6 @@ public class ImageCatalogResource {
 
     @GET
     @Path("/info")
-    @Counted(name = "demo_counter", monotonic = true)
     public Response getInfo() {
 
         return Response.ok("INFO").build();
