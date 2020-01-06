@@ -62,9 +62,10 @@ public class ImageCatalogResource {
     }
 
     @GET
-    @Path("/external/{text}")
-    public Response getExternalData(@PathParam("text")String description) {
-        String descriptionData = imageBean.getDescriptionLang(description);
+    @Path("/external/{photoId}")
+    public Response getExternalData(@PathParam("photoId")Integer photoId) {
+        ImageEntity photo = imageBean.getPhoto(photoId);
+        String descriptionData = imageBean.getDescriptionLang(photo.getDescription());
         if(descriptionData == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

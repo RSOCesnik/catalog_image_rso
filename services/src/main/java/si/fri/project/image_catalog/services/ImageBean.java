@@ -6,6 +6,9 @@ import com.kumuluz.ee.rest.utils.JPAUtils;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.json.JSONObject;
 import si.fri.project.image_catalog.models.CommentDto;
 import si.fri.project.image_catalog.models.ImageEntity;
@@ -60,16 +63,12 @@ public class ImageBean {
         QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery())
                 .defaultOffset(0)
                 .build();
-        if(appProperties.isExternalServicesEnabled()) {
-            try {
-                return JPAUtils.queryEntities(em, ImageEntity.class, queryParameters);
+        try {
+            return JPAUtils.queryEntities(em, ImageEntity.class, queryParameters);
 
-            } catch (WebApplicationException | ProcessingException e) {
-                throw new InternalServerErrorException(e);
-            }
+        } catch (WebApplicationException | ProcessingException e) {
+            throw new InternalServerErrorException(e);
         }
-        return null;
-
     }
 
     public List<CommentDto> getComments(Integer photoId) {
@@ -112,23 +111,33 @@ public class ImageBean {
 
     }
 
+    @CircuitBreaker(requestVolumeThreshold = 3)
+    @Timeout(value = 2, unit = ChronoUnit.SECONDS)
+    @Fallback(fallbackMethod = "getDescriptionLangback")
     public String getDescriptionLang(String description) {
-        try {
-            HttpResponse<String> response = Unirest.post("https://google-translate1.p.rapidapi.com/language/translate/v2/detect")
-                    .header("x-rapidapi-host", "google-translate1.p.rapidapi.com")
-                    .header("x-rapidapi-key", "cdcd0362b8msh238c8ef2c593523p155b83jsn26b296767ef4")
-                    .header("content-type", "application/x-www-form-urlencoded")
-                    .body("q="+ URLEncoder.encode(description, "UTF-8"))
-                    .asString();
+        if(appProperties.isExternalServicesEnabled()) {
+            try {
+                HttpResponse<String> response = Unirest.post("https://google-translate1.p.rapidapi.com/language/translate/v2/detect")
+                        .header("x-rapidapi-host", "google-translate1.p.rapidapi.com")
+                        .header("x-rapidapi-key", "cdcd0362b8msh238c8ef2c593523p155b83jsn26b296767ef4")
+                        .header("content-type", "application/x-www-form-urlencoded")
+                        .body("q=" + URLEncoder.encode(description, "UTF-8"))
+                        .asString();
 
-            log.severe(response.getBody());
-            return response.getBody();
-        } catch (WebApplicationException | ProcessingException | UnirestException | UnsupportedEncodingException e) {
-            log.severe(e.getMessage());
-            throw new InternalServerErrorException(e);
+                log.severe(response.getBody());
+                return response.getBody();
+            } catch (WebApplicationException | ProcessingException | UnirestException | UnsupportedEncodingException e) {
+                log.severe(e.getMessage());
+                throw new InternalServerErrorException(e);
+            }
+        }else{
+            return null;
         }
     }
 
+    private String getDescriptionLangback(String description) {
+        return "";
+    }
 
 
     public ImageEntity getPhoto(Integer photoId) {
