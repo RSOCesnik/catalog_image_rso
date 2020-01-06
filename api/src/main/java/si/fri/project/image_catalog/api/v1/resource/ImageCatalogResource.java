@@ -61,6 +61,17 @@ public class ImageCatalogResource {
     }
 
     @GET
+    @Path("/external/{text}")
+    public Response getPhoto(@PathParam("text")String description) {
+        String descriptionData = imageBean.getDescriptionLang(description);
+        if(descriptionData == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(descriptionData).build();
+    }
+
+
+    @GET
     @Path("/info")
     @Counted(name = "demo_counter", monotonic = true)
     public Response getInfo() {

@@ -43,7 +43,11 @@
             <groupId>com.kumuluz.ee.rest</groupId>
             <artifactId>kumuluzee-rest-core</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.mashape.unirest</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>1.4.9</version>
+        </dependency>
         <dependency>
             <groupId>si.fri.project</groupId>
             <artifactId>image-catalog-models</artifactId>

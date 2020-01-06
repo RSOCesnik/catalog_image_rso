@@ -3,6 +3,10 @@ package si.fri.project.image_catalog.services;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONObject;
 import si.fri.project.image_catalog.models.CommentDto;
 import si.fri.project.image_catalog.models.ImageEntity;
 
@@ -18,6 +22,8 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.UriInfo;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,6 +111,28 @@ public class ImageBean {
         return null;
 
     }
+
+    public String getDescriptionLang(String description) {
+        try {
+            HttpResponse<String> response = Unirest.post("https://google-translate1.p.rapidapi.com/language/translate/v2/detect")
+                    .header("x-rapidapi-host", "google-translate1.p.rapidapi.com")
+                    .header("x-rapidapi-key", "cdcd0362b8msh238c8ef2c593523p155b83jsn26b296767ef4")
+                    .header("content-type", "application/x-www-form-urlencoded")
+                    .body("q="+ URLEncoder.encode(description, "UTF-8"))
+                    .asString();
+
+            JSONObject myObject = new JSONObject(response.getBody());
+//            Response response = client.newCall(request).execute();
+            log.severe(response.getBody().toString());
+        } catch (WebApplicationException | ProcessingException | UnirestException | UnsupportedEncodingException e) {
+            log.severe(e.getMessage());
+            throw new InternalServerErrorException(e);
+        }
+        return "";
+    }
+
+
+
     public ImageEntity getPhoto(Integer photoId) {
         ImageEntity photo = em.find(ImageEntity.class, photoId);
         if(photo == null) throw new NotFoundException();
