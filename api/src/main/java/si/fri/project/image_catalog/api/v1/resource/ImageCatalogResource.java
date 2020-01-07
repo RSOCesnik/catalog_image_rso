@@ -9,6 +9,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
+import java.util.logging.Logger;
+
 import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Metered;
@@ -29,6 +31,8 @@ public class ImageCatalogResource {
     @Inject
     private ImageBean imageBean;
 
+    private Logger log = Logger.getLogger(ImageCatalogResource.class.getName());
+
     @Metered
     @GET
     public Response getPhotos() {
@@ -41,6 +45,7 @@ public class ImageCatalogResource {
     @Path("/{photoId}")
     @Counted(name = "demo_counter", monotonic = true)
     public Response getPhoto(@PathParam("photoId")Integer photoId) {
+
         ImageEntity photoandcomments = imageBean.getPhoto(photoId);
         if(photoandcomments == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -65,20 +70,11 @@ public class ImageCatalogResource {
     @Path("/external/{photoId}")
     public Response getExternalData(@PathParam("photoId")Integer photoId) {
         ImageEntity photo = imageBean.getPhoto(photoId);
+        log.info(photo.getDescription());
         String descriptionData = imageBean.getDescriptionLang(photo.getDescription());
         if(descriptionData == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok(descriptionData).build();
     }
-
-
-    @GET
-    @Path("/info")
-    public Response getInfo() {
-
-        return Response.ok("INFO").build();
-    }
-
-
 }

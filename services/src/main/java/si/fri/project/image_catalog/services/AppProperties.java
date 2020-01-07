@@ -12,18 +12,11 @@ public class AppProperties {
     @ConfigValue(value = "external-services-enabled", watch = true)
     private boolean externalServicesEnabled;
 
-    @ConfigValue(value = "config-services-enabled", watch = true)
-    private boolean commentsServicesEnabled;
-
     @ConfigValue(value = "service.healthy", watch = true)
     private boolean healthy;
 
     public boolean isExternalServicesEnabled() {
         return externalServicesEnabled;
-    }
-
-    public boolean isCommentsServicesEnabled() {
-        return commentsServicesEnabled;
     }
 
     public void setExternalServicesEnabled(boolean externalServicesEnabled) {

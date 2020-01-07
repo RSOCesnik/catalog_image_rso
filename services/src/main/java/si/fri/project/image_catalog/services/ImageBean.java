@@ -115,6 +115,7 @@ public class ImageBean {
     @Timeout(value = 2, unit = ChronoUnit.SECONDS)
     @Fallback(fallbackMethod = "getDescriptionLangback")
     public String getDescriptionLang(String description) {
+        log.info(String.valueOf(appProperties.isExternalServicesEnabled()));
         if(appProperties.isExternalServicesEnabled()) {
             try {
                 HttpResponse<String> response = Unirest.post("https://google-translate1.p.rapidapi.com/language/translate/v2/detect")

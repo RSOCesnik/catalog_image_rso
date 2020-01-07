@@ -65,7 +65,7 @@ kumuluzee:
         url-pattern: /v1/catalog/info/*
         status-codes: "200"
 
-  app-properties:
-    config-services-enabled: true
-    service:
-      healthy: true
+#  app-properties:
+#    config-services-enabled: true
+#    service:
+#      healthy: true
